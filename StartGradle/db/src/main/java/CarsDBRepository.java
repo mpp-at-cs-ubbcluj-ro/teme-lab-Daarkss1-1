@@ -21,7 +21,7 @@ public class CarsDBRepository implements CarRepository {
         logger.traceEntry("Finding cars by manufacturer: {}", manufacturerN);
         List<Car> cars = new ArrayList<>();
         try (Connection con = dbUtils.getConnection()) {
-            String sql = "SELECT * FROM Masini WHERE manufacturer = ?";
+            String sql = "SELECT * FROM cars WHERE manufacturer = ?";
             try (PreparedStatement preStmt = con.prepareStatement(sql)) {
                 preStmt.setString(1, manufacturerN);
                 try (ResultSet result = preStmt.executeQuery()) {
@@ -49,7 +49,7 @@ public class CarsDBRepository implements CarRepository {
         logger.traceEntry("Finding cars between years {} and {}", min, max);
         List<Car> cars = new ArrayList<>();
         try (Connection con = dbUtils.getConnection()) {
-            String sql = "SELECT * FROM Masini WHERE year BETWEEN ? AND ?";
+            String sql = "SELECT * FROM cars WHERE year BETWEEN ? AND ?";
             try (PreparedStatement preStmt = con.prepareStatement(sql)) {
                 preStmt.setInt(1, min);
                 preStmt.setInt(2, max);
@@ -77,7 +77,7 @@ public class CarsDBRepository implements CarRepository {
     public void add(Car elem) {
         logger.traceEntry("Adding car: {}", elem);
         try (Connection con = dbUtils.getConnection()) {
-            String sql = "INSERT INTO Masini (manufacturer, model, year) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO cars (manufacturer, model, year) VALUES (?, ?, ?)";
             try (PreparedStatement preStmt = con.prepareStatement(sql)) {
                 preStmt.setString(1, elem.getManufacturer());
                 preStmt.setString(2, elem.getModel());
@@ -95,7 +95,7 @@ public class CarsDBRepository implements CarRepository {
     public void update(Integer id, Car elem) {
         logger.traceEntry("Updating car with ID {}: {}", id, elem);
         try (Connection con = dbUtils.getConnection()) {
-            String sql = "UPDATE Masini SET manufacturer = ?, model = ?, year = ? WHERE id = ?";
+            String sql = "UPDATE cars SET manufacturer = ?, model = ?, year = ? WHERE id = ?";
             try (PreparedStatement preStmt = con.prepareStatement(sql)) {
                 preStmt.setString(1, elem.getManufacturer());
                 preStmt.setString(2, elem.getModel());
@@ -115,7 +115,7 @@ public class CarsDBRepository implements CarRepository {
         logger.traceEntry("Finding all cars");
         List<Car> cars = new ArrayList<>();
         try (Connection con = dbUtils.getConnection()) {
-            String sql = "SELECT * FROM Masini";
+            String sql = "SELECT * FROM cars";
             try (PreparedStatement preStmt = con.prepareStatement(sql)) {
                 try (ResultSet result = preStmt.executeQuery()) {
                     while (result.next()) {
